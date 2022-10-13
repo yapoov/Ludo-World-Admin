@@ -13,6 +13,10 @@ import UserCreate from "./components/UserCreate";
 import UserEdit from "./components/UserEdit";
 import authProvider from "./authProvider";
 import { Route } from "react-router-dom";
+import OrderEdit from "./components/OrderEdit";
+
+import { FaUser, FaMoneyBill } from "react-icons/fa";
+// import  from '@material-ui/core';
 
 const myPage = () => {
   return <div>FACKYOU</div>;
@@ -26,6 +30,8 @@ function App() {
       dataProvider={restProvider("https://localhost:7270/api")}
     >
       <Resource
+        // icon={<FaUser />}
+        // icon={}
         name="User"
         list={UserList}
         create={UserCreate}
@@ -41,7 +47,12 @@ function App() {
           }
         />
       </CustomRoutes>
-      <Resource name="Order" list={OrderList} />
+      <Resource
+        // icon={<FaMoneyBill />}
+        name="Order"
+        list={OrderList}
+        edit={OrderEdit}
+      />
     </Admin>
   );
 }
