@@ -6,6 +6,10 @@ import {
   DateField,
   EditButton,
   DeleteButton,
+  RichTextField,
+  FilterButton,
+  TopToolbar,
+  ReferenceField,
 } from "react-admin";
 
 const OrderList = (props) => {
@@ -13,13 +17,11 @@ const OrderList = (props) => {
     <List {...props}>
       <Datagrid>
         <TextField source="id" />
-        <TextField source="userId" />
+        <ReferenceField source="userId" reference="user" />
         <TextField source="amount" />
         <TextField source="status" />
         <TextField source="type" />
-        <DateField source="date" />
-
-        {/* <DateField source="createdAt" /> */}
+        <TextField source="date" />
         <EditButton basePath="/User" />
         <DeleteButton basePath="/User" />
       </Datagrid>

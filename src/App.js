@@ -5,6 +5,7 @@ import {
   CustomRoutes,
   Resource,
   useAuthenticated,
+  usePermissions,
 } from "react-admin";
 import restProvider from "ra-data-simple-rest";
 import UserList from "./components/UserList";
@@ -15,8 +16,10 @@ import authProvider from "./authProvider";
 import { Route } from "react-router-dom";
 import OrderEdit from "./components/OrderEdit";
 
-import { FaUser, FaMoneyBill } from "react-icons/fa";
+import UserIcon from "@mui/icons-material/Group";
+import OrderIcon from "@mui/icons-material/Book";
 // import  from '@material-ui/core';
+import { Card, CardContent, CardHeader } from "@mui/material";
 
 const myPage = () => {
   return <div>FACKYOU</div>;
@@ -25,30 +28,24 @@ const myPage = () => {
 function App() {
   return (
     <Admin
+      // dashboard={Dashboard}
       authProvider={authProvider}
       requireAuth
-      dataProvider={restProvider("https://localhost:7270/api")}
+      dataProvider={restProvider(
+        "https://ludoworldwithrealmoneyapi.azurewebsites.net/api"
+      )}
     >
       <Resource
-        // icon={<FaUser />}
-        // icon={}
         name="User"
+        icon={UserIcon}
         list={UserList}
         create={UserCreate}
         edit={UserEdit}
+        recordRepresentation="phoneNumber"
       />
-      <CustomRoutes>
-        <Route
-          path="/users"
-          element={
-            <Authenticated>
-              <myPage />
-            </Authenticated>
-          }
-        />
-      </CustomRoutes>
+
       <Resource
-        // icon={<FaMoneyBill />}
+        icon={OrderIcon}
         name="Order"
         list={OrderList}
         edit={OrderEdit}
@@ -56,5 +53,12 @@ function App() {
     </Admin>
   );
 }
+
+const Dashboard = () => (
+  <Card>
+    <CardHeader title="Welcome to the administration" />
+    <CardContent>Lorem ipsum sic dolor amet...</CardContent>
+  </Card>
+);
 
 export default App;

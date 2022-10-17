@@ -5,52 +5,59 @@ import {
   AUTH_ERROR,
   AUTH_CHECK,
 } from "react-admin";
-import { createBrowserHistory } from "history";
-const history = createBrowserHistory();
 
-const homepage = () => {
-  history.push("/home"); // redirect function to homepage
-};
-export default (type, params, props) => {
-  if (type === AUTH_LOGIN) {
-    const { username, password } = params;
+const authProvider = {
+  // called when the user attempts to log in
+  login: ({ username, password }) => {
+    console.log(JSON.stringify({ username, password }));
+    const request = new Request(
+      "https://ludoworldwithrealmoneyapi.azurewebsites.net/api/AdminAuth",
+      {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      }
+    );
 
-    // simple user username password, redirect funtion
-    if (username === "user" && password === "password") {
-      localStorage.setItem("role", "user");
-      localStorage.removeItem("not_authenticated");
-      homepage();
-      return Promise.resolve();
-    }
-    //admin  role   username and password
-    if (username === "admin" && password === "password") {
-      localStorage.setItem("role", "admin");
-      localStorage.removeItem("not_authenticated");
-      return Promise.resolve();
-    }
-    localStorage.setItem("not_authenticated", true);
-    return Promise.reject();
-  }
-  if (type === AUTH_LOGOUT) {
-    localStorage.setItem("not_authenticated", true);
-    localStorage.removeItem("role");
+    return fetch(request)
+      .then((response) => {
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error(response.statusText);
+        }
+
+        localStorage.setItem("username", username);
+        return response.json();
+      })
+      .then((auth) => {
+        localStorage.setItem("permissions", auth.role);
+        localStorage.setItem("auth", JSON.stringify(auth));
+        return Promise.resolve();
+      })
+      .catch(() => {
+        throw new Error("Network error");
+      });
+  },
+  // called when the user clicks on the logout button
+  logout: () => {
+    localStorage.removeItem("username");
     return Promise.resolve();
-  }
-  if (type === AUTH_ERROR) {
-    const { status } = params;
-    return status === 401 || status === 403
-      ? Promise.reject()
-      : Promise.resolve();
-  }
-  if (type === AUTH_CHECK) {
-    return localStorage.getItem("not_authenticated")
-      ? Promise.reject()
-      : Promise.resolve();
-  }
-  if (type === AUTH_GET_PERMISSIONS) {
-    const role = localStorage.getItem("role");
-    return Promise.resolve(role);
-  }
-
-  return Promise.reject("Unknown method");
+  },
+  // called when the API returns an error
+  checkError: ({ status }) => {
+    if (status === 401 || status === 403) {
+      localStorage.removeItem("username");
+      return Promise.reject();
+    }
+    return Promise.resolve();
+  },
+  // called when the user navigates to a new location, to check for authentication
+  checkAuth: () => {
+    return localStorage.getItem("username")
+      ? Promise.resolve()
+      : Promise.reject();
+  },
+  // called when the user navigates to a new location, to check for permissions / roles
+  getPermissions: () => Promise.resolve(),
 };
+
+export default authProvider;
