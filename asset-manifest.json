@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Ludo-World-Admin/static/css/main.073c9b0a.css",
-    "main.js": "/Ludo-World-Admin/static/js/main.f20baea6.js",
+    "main.js": "/Ludo-World-Admin/static/js/main.e8526e88.js",
     "static/js/787.c4e7f8f9.chunk.js": "/Ludo-World-Admin/static/js/787.c4e7f8f9.chunk.js",
     "index.html": "/Ludo-World-Admin/index.html",
     "main.073c9b0a.css.map": "/Ludo-World-Admin/static/css/main.073c9b0a.css.map",
-    "main.f20baea6.js.map": "/Ludo-World-Admin/static/js/main.f20baea6.js.map",
+    "main.e8526e88.js.map": "/Ludo-World-Admin/static/js/main.e8526e88.js.map",
     "787.c4e7f8f9.chunk.js.map": "/Ludo-World-Admin/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.f20baea6.js"
+    "static/js/main.e8526e88.js"
   ]
 }
