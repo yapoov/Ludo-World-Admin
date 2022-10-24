@@ -32,7 +32,7 @@ function App() {
       authProvider={authProvider}
       requireAuth
       dataProvider={restProvider(
-        "https://ludoworldwithrealmoneyapi.azurewebsites.net/api"
+        "https://128.199.132.228:8001/api"
       )}
     >
       <Resource

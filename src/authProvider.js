@@ -11,7 +11,7 @@ const authProvider = {
   login: ({ username, password }) => {
     console.log(JSON.stringify({ username, password }));
     const request = new Request(
-      "https://ludoworldwithrealmoneyapi.azurewebsites.net/api/AdminAuth",
+      "https://128.199.132.228:8001/api/AdminAuth",
       {
         method: "POST",
         body: JSON.stringify({ username, password }),

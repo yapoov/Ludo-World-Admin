@@ -17,7 +17,9 @@ const OrderList = (props) => {
     <List {...props}>
       <Datagrid>
         <TextField source="id" />
-        <ReferenceField source="userId" reference="user" />
+        <ReferenceField source="userId" reference="User">
+          <TextField source="phoneNumber"/>
+        </ReferenceField>
         <TextField source="amount" />
         <TextField source="status" />
         <TextField source="type" />
